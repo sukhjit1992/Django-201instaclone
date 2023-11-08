@@ -19,8 +19,10 @@ from django.urls import path
 
 from feed import urls as feed_urls
 from django.conf.urls import include
+from django.urls import re_path 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include(feed_urls, namespace="feed"))
+    path("", include(feed_urls, namespace="feed")),
+    re_path(r'^', include("allauth.urls")), 
 ]

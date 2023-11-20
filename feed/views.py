@@ -1,5 +1,7 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic.edit import CreateView
 from .models import Post
+from django.contrib.auth.mixins import  LoginRequiredMixin
 
 # Create your views here.
 class HomePage(ListView):
@@ -13,3 +15,16 @@ class PostDetailView(DetailView):
     template_name="feed/detail.html"
     model = Post
     context_object_name ="post"
+class CreateNewPost(CreateView, LoginRequiredMixin):
+    template_name = "feed/create.html"
+    model = Post
+    fields = ["text"]
+    success_url= "/"
+    def dispatch(self, request, *arg, **kwarg):
+        self.request = request
+        return super().dispatch(request, *arg, **kwarg)
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.author = self.request.user
+        obj.save
+        return super().form_valid(form)

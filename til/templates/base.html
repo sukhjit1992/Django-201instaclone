@@ -33,7 +33,7 @@
            
              {% if request.user.is_authenticated %}
              <li>
-               <a href="{% url 'feed:new_post' %}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+               <a href="{% url 'feed:new_post' %}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group js-toggle-modal">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m2.513 12.833 9.022 5.04a.995.995 0 0 0 .973.001l8.978-5a1 1 0 0 0-.002-1.749l-9.022-5a1 1 0 0 0-.968-.001l-8.978 4.96a1 1 0 0 0-.003 1.749z"></path><path d="m3.485 15.126-.971 1.748 9 5a1 1 0 0 0 .971 0l9-5-.971-1.748L12 19.856l-8.515-4.73zM20 8V6h2V4h-2V2h-2v2h-2v2h2v2z"></path></svg>
                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
                   </svg>
@@ -101,7 +101,7 @@
     
   
     <!-- component -->
-   {% if request.user.is_aunthenticated %}
+   {% if request.user.is_authenticated %}
       <div class="flex items-center justify-center fixed left-0 bottom-0 w-full h-full bg-gray-800 bg-opacity-90 hidden js-modal">
          <div class="bg-white rounded-lg w-1/2">
          <div class="flex flex-col items-start p-4">
@@ -126,7 +126,6 @@
                   </button>
                </div>
             </div>
-            
             </div>
          </div>
          </div>
@@ -136,15 +135,9 @@
       integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" 
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
      <script>
-         `$.ajaxSetup()`
+         $.ajaxSetup()
      </script>
       <script src = "{% static 'js/main.js' %}"> </script>
-   
-         
-      
-   
-    
-    
-    
+   </div>  
 </body>
 </html>

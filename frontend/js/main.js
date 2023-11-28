@@ -51,8 +51,6 @@ $.ajaxSetup({
         console.warn(error)
         btn.prop("disabled", false).text("Error");
       }
-
-
     })
   })
 })

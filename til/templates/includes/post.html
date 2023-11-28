@@ -20,7 +20,7 @@
                 <div>
                     {# TODO: user need to link their bio,photo,thumbnail & name #}
                     <!-- add url below detail -->
-                    <a class="flex items-center" href="{% url 'feed:detail' post.id %}">
+                    <a class="flex items-center" href="{% url 'profiles:detail' post.author.username %}">
                         {% thumbnail post.author.profile.image "373x373" crop="center" as im %}
             <img src="{{ im.url }}" alt ="avatar">
         {% endthumbnail %}

@@ -13,12 +13,11 @@ class ProfileDetailView(DetailView):
     context_object_name= "user"
     slug_field = "username"
     slug_url_kwarg= "username"
-    def get_context_data(self, **kwargs):
-        user= self.get_object()
-        context= super().get_context_data(**kwargs)
-        context['total_posts']= Post.objects.filter(author=user).count()
-        context['total_follower'] = Post.objects.filter(author=user).count()
-        return context
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        return super().dispatch(request, *args, **kwargs)
+
+   
 
 
 class FollowView(LoginRequiredMixin, View ):

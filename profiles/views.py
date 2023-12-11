@@ -16,6 +16,12 @@ class ProfileDetailView(DetailView):
     def dispatch(self, request, *args, **kwargs):
         self.request = request
         return super().dispatch(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        user = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['total_posts']= Post.objects.filter(author=user).count
+        context['total_follower'] = Follower.objects.filter(following=user).count
+        return context
 
    
 

@@ -1,16 +1,32 @@
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import DetailView, CreateView, TemplateView
 from django.views.generic.edit import CreateView
 from .models import Post
 from django.shortcuts import render
 from django.contrib.auth.mixins import  LoginRequiredMixin
+from follower.models import Follower
 
 # Create your views here.
-class HomePage(ListView):
+class HomePage(TemplateView):
     http_method_name = ["get"]
     template_name= "feed/homepage.html"
-    model = Post
-    context_object_name= "posts"
-    queryset = Post.objects.all().order_by("-id")[0:30]
+    def dispatch(self, request, *args, **kwargs):
+        self.request= request
+        return super().dispatch(request, *args, **kwargs)
+    def get_context_data(self, *args, **kwargs):
+        context= super().get_context_data(*args, **kwargs)
+        if self.request.user.is_authenticated:
+            following = list(Follower.objects.filter(followed_by = self.request.user).values_list('following', flat=True))
+            posts= Post.objects.filter(author__in= following).order_by('-id')[0:60]
+            print(following)
+            if not following:
+                posts= Post.objects.all().order_by('-id')[0:30]
+            else:
+                posts= Post.objects.filter(author__in= following).order_by('-id')[0:60] 
+        else:
+            posts= Post.objects.all().order_by('-id')[0:30]
+        context['posts']= posts
+        return context
+
 class PostDetailView(DetailView):
     http_method_name=["get"]
     template_name="feed/detail.html"

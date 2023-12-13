@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'sorl.thumbnail'
+    'sorl.thumbnail',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

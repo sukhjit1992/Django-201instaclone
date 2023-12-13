@@ -1,6 +1,25 @@
 {% extends "base.html" %}
-{% block body %}
 
+.container {
+    background-color: #343232;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+}
+    /* CSS Styles for messages */
+
+.messages ul {
+    list-style: none;
+    padding: 0;
+}
+
+.messages li {
+    margin-bottom: 5px;
+}
+
+
+{% block body %}
+<div class="container">
  {% if messages %}
  <div>
     <strong>messages:</strong>
@@ -12,4 +31,5 @@
  </div>
  {% endif %}
  {% block content %}{% endblock content %}
+</div>
  {% endblock %}

@@ -1,10 +1,16 @@
-from django.contrib.auth.models import User
-from django.views.generic import DetailView, View
-from django.contrib.auth.mixins import LoginRequiredMixin
-from feed.models import Post
-from django.http import JsonResponse
-from follower.models import Follower  
 
+from django import http
+
+from django.views.generic import DetailView, View, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
+from django.contrib.auth.models import User
+
+
+
+from feed.models import Post
+from follower.models import Follower
+from profiles.models import Profile
 
 class ProfileDetailView(DetailView):
     http_method_name= ["get"]
@@ -56,4 +62,25 @@ class FollowView(LoginRequiredMixin, View ):
             'wording':"Unfollow" if data['action']== 'follow' else 'follow'
         })
 
+class MyProfileView(LoginRequiredMixin, UpdateView):
+    http_method_names=["get","put","post"]
+    template_name="profile/myprofile.html"
+    model = Profile
+    fields=['name', 'tagline', 'id', 'image', 'cover']
+    context_object_name="myprofile"
+    slug_field="id"
+    slug_url_kwarg="id"
+    success_url="/"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.request=request
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        user=self.get_object()
+        context=super().get_context_data(**kwargs)
+        context['total_posts'] = Post.objects.filter(author=user.user).count
+        context['total_followers'] = Follower.objects.filter(following=user.user).count
+        return context
+    
 

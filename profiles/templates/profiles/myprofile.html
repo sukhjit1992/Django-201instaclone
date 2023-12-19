@@ -57,7 +57,7 @@
             <!-- component -->
             <div class="rounded-3xl overflow-hidden shadow-xl max-w-xs my-3 mx-auto shadow" style="max-width: 20rem;">
                 <img src="{{ myprofile.cover.url }}" class="w-full" />
-                <div class="flex justify-center -mt-8">
+                <div class="flex justify-center -mt-8 ">
                     {% thumbnail myprofile.image "100x100" crop="center" as im %}
                         <img src="{{ im.url }}" class="rounded-full border-solid border-white border-2 -mt-3">		
                     {% endthumbnail %}  
